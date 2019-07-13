@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Foody</string>
+    <string name="dangtai">Đang tải...</string>
+    <string name="phienban">Version</string>
+    <string name="tencongty">buivanphuc@gmail.com</string>
+    <string name="email">Email</string>
+    <string name="matkhau">Mật khẩu</string>
+    <string name="nhaplaimatkhau">Nhập lại mật khẩu</string>
+    <string name="dangnhap">Đăng nhập</string>
+    <string name="hoac">Hoặc</string>
+    <string name="dangNhapBangGoogle">Đăng nhập bằng google</string>
+    <string name="dangNhapBangFacebook">Đăng nhập bằng facebook</string>
+    <string name="quenmatkhau">Quên mật khẩu?</string>
+    <string name="dangky"><i>Đăng ký</i> </string>
+    <string name="dangkymoi"><i>Đăng ký mới</i> </string>
+    <string name="banChuaNhap">Bạn chưa nhập</string>
+    <string name="thongBaoNhapLaiMatKhau">Mật khẩu không trùng khớp</string>
+    <string name="thongBaoDangKyThanhCong">Đăng ký thành công</string>
+    <string name="thongBaoDangKyThatBai">Đăng ký thất bại</string>
+    <string name="dang_xu_ly">Đang xử lý...</string>
+
+    <string name="dang_nhap_that_bai">Đăng nhập thất bại</string>
+    <string name="chua_nhap_email">Chưa nhập Email</string>
+    <string name="chua_nhap_pass">Chưa nhập mật khẩu</string>
+    <string name="khoi_phuc_mk">Khôi phục mật khẩu</string>
+    <string name="gui_mail">Gửi Email</string>
+    <string name="email_k_hop_le">Email không hợp lệ</string>
+    <string name="gui_emai_thanh_cong">Gửi Email thành công</string>
+</resources>

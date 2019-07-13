@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#cd2027</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="backgroundColor">#cd2027</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparenBackground">#66000000</color>
+    <color name="backGroundFb">#189aca</color>
+    <color name="color_black">#000</color>
+</resources>
