@@ -8,4 +8,5 @@
     <color name="transparenBackground">#66000000</color>
     <color name="backGroundFb">#189aca</color>
     <color name="color_black">#000</color>
+    <color name="color_bg_trangchu">#CCC</color>
 </resources>

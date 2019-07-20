@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.buivanphuc.foody.R;
+import com.buivanphuc.foody.controller.DangKyController;
+import com.buivanphuc.foody.model.ThanhVienModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +26,7 @@ public class DangKyActivity extends AppCompatActivity implements View.OnClickLis
     String mEmail, mPassWord, mNhapLaiPass;
     String mThongBaoLoi = "";
     Dialog mDialog;
+    DangKyController dangKyController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +61,14 @@ public class DangKyActivity extends AppCompatActivity implements View.OnClickLis
                     if (task.isSuccessful()) {
                         mDialog.cancel();
                         Toast.makeText(DangKyActivity.this, getString(R.string.thongBaoDangKyThanhCong), Toast.LENGTH_LONG).show();
+                        ThanhVienModel thanhVienModel = new ThanhVienModel();
+                        thanhVienModel.setHinhanh("user.png");
+                        thanhVienModel.setHoten(edEmail.getText().toString());
+
+                        String uid = task.getResult().getUser().getUid();
+                        dangKyController = new DangKyController();
+                        dangKyController.themThongTinThanhVien(thanhVienModel,uid);
+
                     } else {
                         Toast.makeText(DangKyActivity.this, getString(R.string.thongBaoDangKyThatBai), Toast.LENGTH_LONG).show();
                         mDialog.cancel();

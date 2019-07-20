@@ -32,7 +32,7 @@ public class KhoiPhucEmailActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_khoiphuc);
         mEdtEmail = findViewById(R.id.edtEmailKP);
-        mBtnSend = findViewById(R.id.btnSend);
+        mBtnSend = findViewById(R.id.btnDangKy);
         mTxtDangKyMoi = findViewById(R.id.txtDangKyMoi);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -44,7 +44,7 @@ public class KhoiPhucEmailActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSend:
+            case R.id.btnDangKy:
                 sEmail = mEdtEmail.getText().toString().trim();
                 if (kiemTraEmail(sEmail)) {
                     firebaseAuth.sendPasswordResetEmail(sEmail).addOnCompleteListener(new OnCompleteListener<Void>() {

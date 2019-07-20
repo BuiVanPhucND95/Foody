@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_trangchu"
+    android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="left|center"
+                android:src="@drawable/chuf" />
+
+            <RadioGroup
+                android:id="@+id/rdGroupODau_AnGi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_background_radiogroup"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rd_odau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_radio_odau"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/o_dau"
+                    android:textColor="@drawable/changetext_radio_trangchu" />
+
+                <RadioButton
+                    android:id="@+id/rd_angi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_radio_angi"
+                    android:button="@android:color/transparent"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/an_gi"
+                    android:textColor="@drawable/changetext_radio_trangchu" />
+            </RadioGroup>
+
+            <ImageView
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:src="@drawable/ic_add_white_24dp" />
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerTrangChu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
 </LinearLayout>

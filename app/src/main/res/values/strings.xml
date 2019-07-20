@@ -26,4 +26,18 @@
     <string name="gui_mail">Gửi Email</string>
     <string name="email_k_hop_le">Email không hợp lệ</string>
     <string name="gui_emai_thanh_cong">Gửi Email thành công</string>
+
+    <string name="an_gi">Ăn gì</string>
+    <string name="o_dau">Ở đâu</string>
+    <string name="moi_nhat">Mới nhất</string>
+    <string name="danh_muc">Danh mục</string>
+    <string name="khu_vuc">Hà Nội</string>
+
+    <string name="gan_toi">Gần tôi</string>
+    <string name="giao_hang">Giao hàng</string>
+    <string name="game_and_fun">Game and Fun</string>
+    <string name="danh_gia">Đánh giá</string>
+    <string name="blogs">Blogs</string>
+    <string name="topmember">Top thành viên</string>
+    <string name="datmon">Đặt món</string>
 </resources>
