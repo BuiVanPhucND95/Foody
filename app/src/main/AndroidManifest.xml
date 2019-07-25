@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.buivanphuc.foody">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,15 +14,15 @@
         <activity
             android:name=".view.SlashScreenActivity"
             android:screenOrientation="portrait">
-
-        </activity>
-        <activity
-            android:name=".view.DangNhapActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.DangNhapActivity"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".view.DangKyActivity"
@@ -30,6 +32,7 @@
 
         </activity>
         <activity android:name=".view.KhoiPhucEmailActivity" android:screenOrientation="portrait" />
+        <activity android:name=".view.ChiTietQuanAnActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

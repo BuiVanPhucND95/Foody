@@ -40,4 +40,10 @@
     <string name="blogs">Blogs</string>
     <string name="topmember">Top thành viên</string>
     <string name="datmon">Đặt món</string>
+
+    <string name="taianh">Tải ảnh</string>
+    <string name="checkin">Check in</string>
+    <string name="binhluan">Bình luận</string>
+    <string name="luulai">Lưu lại</string>
+    <string name="chiase">Chia sẻ</string>
 </resources>

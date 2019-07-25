@@ -62,6 +62,7 @@
                 android:textColor="@drawable/changetext_tab_trangchu" />
         </RadioGroup>
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollViewODau"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout

@@ -1,6 +1,7 @@
 package com.buivanphuc.foody.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -13,14 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buivanphuc.foody.R;
 import com.buivanphuc.foody.model.BinhLuanModel;
+import com.buivanphuc.foody.model.ChiNhanhQuanAnModel;
 import com.buivanphuc.foody.model.QuanAnModel;
+import com.buivanphuc.foody.view.ChiTietQuanAnActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,12 +46,14 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
     class ViewHolderODau extends RecyclerView.ViewHolder {
         TextView txtTenQuanAn, txtTieudebinhluan, txtTieudebinhluan2;
         TextView txtNodungbinhluan, txtNodungbinhluan2, txtTongBinhLuan, txtTongHinhBinhLuan;
-        TextView txtChamDiemBinhLuan, txtChamDiemBinhLuan2, txtDiemTrungBinhQuanAn;
+        TextView txtChamDiemBinhLuan, txtChamDiemBinhLuan2, txtDiemTrungBinhQuanAn, txtDiaChiQuanAnODau;
+        TextView txtKhoangCachQuanAnODau;
         Button btnDatMon;
         ImageView imageHinhQuanAnOdau;
         LinearLayout containerBinhLuan2, containerBinhLuan;
-
         CircleImageView cicleImageUser, cicleImageUser2;
+
+        CardView cardViewOdau;
 
         ViewHolderODau(@NonNull View itemView) {
             super(itemView);
@@ -69,7 +74,9 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             txtTongBinhLuan = itemView.findViewById(R.id.txtTongBinhLuan);
             txtTongHinhBinhLuan = itemView.findViewById(R.id.txtTongHinhBinhLuan);
             txtDiemTrungBinhQuanAn = itemView.findViewById(R.id.txtDiemTrungBinhQuanAn);
-
+            txtDiaChiQuanAnODau = itemView.findViewById(R.id.txtDiaChiQuanAnODau);
+            txtKhoangCachQuanAnODau = itemView.findViewById(R.id.txtKhoangCachQuanAnODau);
+            cardViewOdau = itemView.findViewById(R.id.cardViewOdau);
 
         }
     }
@@ -84,13 +91,19 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderODau holder, int position) {
-        QuanAnModel quanAnModel = quanAnModelList.get(position);
+        final QuanAnModel quanAnModel = quanAnModelList.get(position);
+
 
         if (quanAnModel.isGiaohang()) {
             holder.btnDatMon.setVisibility(View.VISIBLE);
         }
         holder.txtTenQuanAn.setText(quanAnModel.getTenquanan());
         // Load ảnh hình quán ăn
+//        if (quanAnModel.getBitmapList().size() > 0) {
+////
+////            holder.imageHinhQuanAnOdau.setImageBitmap(quanAnModel.getBitmapList().get(0));
+////        }
+
         if (quanAnModel.getHinhanhquanan().size() > 0) {
 
             StorageReference storageHinhAnh = FirebaseStorage.getInstance().getReference().child("hinhanh").
@@ -112,6 +125,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
                 }
             });
         }
+
         // Kết thúc load hình ảnh quán ăn
 
         // Load Bình Luận quán ăn
@@ -141,7 +155,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
                 tongDiem += bl.getChamdiem();
             }
             diemTrungBinhQuanAn = tongDiem / quanAnModel.getBinhLuanModelList().size();
-            holder.txtDiemTrungBinhQuanAn.setText( String.format("%.1f",diemTrungBinhQuanAn));
+            holder.txtDiemTrungBinhQuanAn.setText(String.format("%.1f", diemTrungBinhQuanAn));
 
             if (tongSoHinhBinhLuan != 0) {
                 holder.txtTongHinhBinhLuan.setText(tongSoHinhBinhLuan + "");
@@ -156,6 +170,32 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             holder.txtTongHinhBinhLuan.setText("0");
         }
 
+        // Kết thúc xử lý bình luận
+
+        // Lấy chi nhánh quán ăn, và hiển thị km
+        if (quanAnModel.getChiNhanhQuanAnModelList().size() > 0) {
+            ChiNhanhQuanAnModel chiNhanhQuanAnModelTam = quanAnModel.getChiNhanhQuanAnModelList().get(0);
+            for (ChiNhanhQuanAnModel chiNhanhQuanAnModel : quanAnModel.getChiNhanhQuanAnModelList()) {
+                if (chiNhanhQuanAnModelTam.getKhoangcach() > chiNhanhQuanAnModel.getKhoangcach()) {
+                    chiNhanhQuanAnModelTam = chiNhanhQuanAnModel;
+                }
+            }
+            holder.txtDiaChiQuanAnODau.setText(chiNhanhQuanAnModelTam.getDiachi());
+            holder.txtKhoangCachQuanAnODau.setText(String.format("%.2f", chiNhanhQuanAnModelTam.getKhoangcach()) + " Km");
+
+        }
+
+        // Xử lý sự kiện click
+        holder.cardViewOdau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iChiTietQuanAn = new Intent(context, ChiTietQuanAnActivity.class);
+
+                iChiTietQuanAn.putExtra("quanan", quanAnModel);
+                context.startActivity(iChiTietQuanAn);
+
+            }
+        });
 
     }
 
@@ -167,7 +207,6 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
                 imageView.setImageBitmap(bitmap);
             }
         });
