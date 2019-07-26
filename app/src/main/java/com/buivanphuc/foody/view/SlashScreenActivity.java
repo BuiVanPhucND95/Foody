@@ -94,13 +94,12 @@ public class SlashScreenActivity extends AppCompatActivity implements GoogleApiC
         Location vitrihientai = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
         if (vitrihientai != null) {
-            Log.d("KiemTra",vitrihientai.getLatitude()+"");
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("latitude", String.valueOf(vitrihientai.getLatitude()));
             editor.putString("longtitude", String.valueOf(vitrihientai.getLongitude()));
             editor.commit();
         }else {
-            Log.d("KiemTra","k có giá trị");
+
         }
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

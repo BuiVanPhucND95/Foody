@@ -34,12 +34,6 @@ public class ODauFragment extends Fragment {
         recyclerODau = view.findViewById(R.id.recyclerODau);
         progressBarODau = view.findViewById(R.id.progressBarODau);
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         sharedPreferences = getContext().getSharedPreferences("TOADO", Context.MODE_PRIVATE);
 
         Location viTriHienTai = new Location("");
@@ -48,6 +42,14 @@ public class ODauFragment extends Fragment {
 
         oDauController = new ODauController(getContext());
         oDauController.getDanhSachQuanAnController(recyclerODau, progressBarODau,viTriHienTai,nestedScrollViewODau);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
         ImageView imageHinhQuanAnOdau;
         LinearLayout containerBinhLuan2, containerBinhLuan;
         CircleImageView cicleImageUser, cicleImageUser2;
+        ProgressBar progressBarQuanAn;
 
         CardView cardViewOdau;
 
@@ -77,6 +79,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             txtDiaChiQuanAnODau = itemView.findViewById(R.id.txtDiaChiQuanAnODau);
             txtKhoangCachQuanAnODau = itemView.findViewById(R.id.txtKhoangCachQuanAnODau);
             cardViewOdau = itemView.findViewById(R.id.cardViewOdau);
+            progressBarQuanAn = itemView.findViewById(R.id.progressBarQuanAn);
 
         }
     }
@@ -116,12 +119,13 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                     holder.imageHinhQuanAnOdau.setImageBitmap(bitmap);
+                    holder.progressBarQuanAn.setVisibility(View.GONE);
+                    holder.imageHinhQuanAnOdau.setAlpha(1.0f);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("KiemTra", e.toString());
                 }
             });
         }

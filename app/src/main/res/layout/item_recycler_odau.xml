@@ -60,13 +60,23 @@
                 android:layout_gravity="bottom"
                 android:gravity="bottom" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageHinhQuanAnOdau"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/hinhtest" />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:alpha="0.2"
+                android:id="@+id/imageHinhQuanAnOdau"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/hinhtest" />
+            <ProgressBar
+                android:id="@+id/progressBarQuanAn"
+                android:indeterminateTint="@color/colorPrimaryDark"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/btnDatMonOdau"
