@@ -98,11 +98,11 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
 
             if (dateHienTai.after(dateMoCua) && dateHienTai.before(dateDongCua)) {
                 // Giờ mở cửa
-                mTxtTrangThaiHoatDong.setText("Đang mở cửa");
+                mTxtTrangThaiHoatDong.setText(getResources().getString(R.string.dang_mo_cua));
                 mTxtTrangThaiHoatDong.setTextColor(Color.RED);
             } else {
                 // Giở đóng cửa
-                mTxtTrangThaiHoatDong.setText("Đã đóng cửa");
+                mTxtTrangThaiHoatDong.setText(getResources().getString(R.string.da_dong_cua));
                 mTxtTrangThaiHoatDong.setTextColor(Color.GREEN);
             }
         } catch (ParseException e) {

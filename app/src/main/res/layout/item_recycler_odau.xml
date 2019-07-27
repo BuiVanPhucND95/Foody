@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardViewOdau"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:id="@+id/cardViewOdau"
-    >
+    android:layout_marginTop="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,14 +18,15 @@
 
             <TextView
                 android:id="@+id/txtDiemTrungBinhQuanAn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="@drawable/background_cycle"
                 android:gravity="center"
                 android:text="0"
-                android:textStyle="bold"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,42 +40,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
-                    android:textSize="18sp"
+                    android:textColor="@color/color_black"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtDiaChiQuanAnODau"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="36 Triệu Quang Phục Quận 3" />
+                    android:text="36 Triệu Quang Phục Quận 3"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <TextView
-                android:text="6km"
-                android:textColor="@color/colorPrimary"
                 android:id="@+id/txtKhoangCachQuanAnODau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:gravity="bottom" />
+                android:gravity="bottom"
+                android:text="6km"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
         </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
-                android:alpha="0.2"
                 android:id="@+id/imageHinhQuanAnOdau"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/hinhtest" />
+                android:src="@drawable/bg_load" />
+
             <ProgressBar
                 android:id="@+id/progressBarQuanAn"
-                android:indeterminateTint="@color/colorPrimaryDark"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
         </FrameLayout>
 
         <Button
@@ -85,7 +89,6 @@
             android:layout_margin="5dp"
             android:background="@drawable/button_radius_5dp"
             android:drawableTop="@drawable/ic_local_shipping_white_24dp"
-            android:padding="5dp"
             android:text="@string/datmon"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
@@ -100,8 +103,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/cicleImageUser"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:src="@drawable/background"
@@ -120,22 +123,25 @@
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtNodungbinhluan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxLines="2"
                     android:text="36 Triệu Quang Phục Quận 3" />
 
             </LinearLayout>
 
             <TextView
-                android:textColor="@color/colorPrimaryDark"
                 android:id="@+id/txtChamDiemBinhLuan"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                />
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,8 +153,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/cicleImageUser2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:src="@drawable/background"
@@ -167,12 +173,15 @@
                     android:layout_height="wrap_content"
                     android:text="Gogi House"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtNodungbinhluan2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxLines="2"
                     android:text="36 Triệu Quang Phục Quận 3" />
 
             </LinearLayout>
@@ -182,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimaryDark"
-                />
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,27 +200,41 @@
             android:layout_marginLeft="50dp">
 
             <TextView
+                android:padding="5dp"
                 android:id="@+id/txtTongBinhLuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableLeft="@drawable/ic_insert_comment_black_24dp"
+                android:drawableLeft="@drawable/comment"
                 android:drawablePadding="5dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="0" />
 
             <TextView
+                android:padding="5dp"
                 android:id="@+id/txtTongHinhBinhLuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
+                android:drawableLeft="@drawable/camera"
                 android:drawablePadding="5dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:text="0" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_weight="1" />
+
+            <TextView
+                android:textSize="12sp"
+                android:id="@+id/txtTrangThaiHoatDong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="@dimen/_10sdp"
+                />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

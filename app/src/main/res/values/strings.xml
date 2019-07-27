@@ -46,4 +46,7 @@
     <string name="binhluan">Bình luận</string>
     <string name="luulai">Lưu lại</string>
     <string name="chiase">Chia sẻ</string>
+
+    <string name="dang_mo_cua">Đang mở cửa</string>
+    <string name="da_dong_cua">Đã đóng cửa</string>
 </resources>

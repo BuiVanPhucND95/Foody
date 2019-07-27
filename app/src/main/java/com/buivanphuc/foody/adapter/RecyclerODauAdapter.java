@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,7 +50,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
     }
 
     class ViewHolderODau extends RecyclerView.ViewHolder {
-        TextView txtTenQuanAn, txtTieudebinhluan, txtTieudebinhluan2;
+        TextView txtTenQuanAn, txtTieudebinhluan, txtTieudebinhluan2,txtTrangThaiHoatDong;
         TextView txtNodungbinhluan, txtNodungbinhluan2, txtTongBinhLuan, txtTongHinhBinhLuan;
         TextView txtChamDiemBinhLuan, txtChamDiemBinhLuan2, txtDiemTrungBinhQuanAn, txtDiaChiQuanAnODau;
         TextView txtKhoangCachQuanAnODau;
@@ -80,6 +85,7 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             txtKhoangCachQuanAnODau = itemView.findViewById(R.id.txtKhoangCachQuanAnODau);
             cardViewOdau = itemView.findViewById(R.id.cardViewOdau);
             progressBarQuanAn = itemView.findViewById(R.id.progressBarQuanAn);
+            txtTrangThaiHoatDong = itemView.findViewById(R.id.txtTrangThaiHoatDong);
 
         }
     }
@@ -187,6 +193,32 @@ public class RecyclerODauAdapter extends RecyclerView.Adapter<RecyclerODauAdapte
             holder.txtDiaChiQuanAnODau.setText(chiNhanhQuanAnModelTam.getDiachi());
             holder.txtKhoangCachQuanAnODau.setText(String.format("%.2f", chiNhanhQuanAnModelTam.getKhoangcach()) + " Km");
 
+        }
+
+        // Xử lý trạng thái hoạt động
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        String gioHienTai = dateFormat.format(calendar.getTime());
+        String gioMoCua = quanAnModel.getGiomocua();
+        String gioDongCua = quanAnModel.getGiodongcua();
+
+        try {
+            Date dateHienTai = dateFormat.parse(gioHienTai);
+            Date dateMoCua = dateFormat.parse(gioMoCua);
+            Date dateDongCua = dateFormat.parse(gioDongCua);
+
+            if (dateHienTai.after(dateMoCua) && dateHienTai.before(dateDongCua)) {
+                // Giờ mở cửa
+                holder.txtTrangThaiHoatDong.setText(context.getResources().getString(R.string.dang_mo_cua));
+                holder.txtTrangThaiHoatDong.setTextColor(Color.RED);
+            } else {
+                // Giở đóng cửa
+                holder.txtTrangThaiHoatDong.setText(context.getResources().getString(R.string.da_dong_cua));
+                holder.txtTrangThaiHoatDong.setTextColor(Color.GREEN);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         // Xử lý sự kiện click

@@ -91,7 +91,7 @@
                         android:layout_height="@dimen/_150sdp"
                         android:alpha="0.5"
                         android:scaleType="fitXY"
-                        android:src="@drawable/background" />
+                        android:src="@drawable/bg_load" />
 
                     <ProgressBar
                         android:id="@+id/progressBarChiTiet"
@@ -245,13 +245,8 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
                 <include layout="@layout/layout_binhluan_chitietquanan" />
             </LinearLayout>
-
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
