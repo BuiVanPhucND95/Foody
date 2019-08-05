@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:indeterminateTint="@color/colorPrimaryDark" />
+                        />
                 </FrameLayout>
 
                <LinearLayout
@@ -110,21 +110,10 @@
                        android:id="@+id/txtTenQuanAnChiTiet"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:paddingLeft="10dp"
-                       android:paddingTop="5dp"
+                       android:padding="10dp"
                        android:textColor="@color/colorPrimaryDark"
                        android:textSize="@dimen/_15sdp"
                        android:textStyle="bold" />
-
-                   <TextView
-                       android:id="@+id/txtDiaChiQuanAnChiTiet"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:paddingLeft="10dp"
-                       android:paddingTop="5dp"
-                       android:textSize="@dimen/_12sdp"
-                       android:textStyle="bold" />
-
                </LinearLayout>
 
                 <LinearLayout
@@ -241,11 +230,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5sdp"
-                        android:text="Chưa mở cửa"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+                <include layout="@layout/layout_tinhnang_chitietquanan"/>
+                <LinearLayout
+                    android:id="@+id/khungTienTich"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                </LinearLayout>
+                <include
+                    layout="@layout/layout_wifi_chitietquanan"
+                    />
                 <include layout="@layout/layout_binhluan_chitietquanan" />
+
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

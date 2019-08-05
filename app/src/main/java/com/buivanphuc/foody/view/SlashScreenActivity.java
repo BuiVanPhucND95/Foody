@@ -50,9 +50,15 @@ public class SlashScreenActivity extends AppCompatActivity implements GoogleApiC
 
         int checkPermissonCoarseLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         int checkPermissonFineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int checkREAD_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if (checkPermissonCoarseLocation != PackageManager.PERMISSION_GRANTED && checkPermissonFineLocation !=PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_PERMISSON_LOCATION);
+        if (checkPermissonCoarseLocation != PackageManager.PERMISSION_GRANTED && checkPermissonFineLocation != PackageManager.PERMISSION_GRANTED &&
+                checkREAD_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    , Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSON_LOCATION);
         } else {
             googleApiClient.connect();
         }
@@ -98,7 +104,7 @@ public class SlashScreenActivity extends AppCompatActivity implements GoogleApiC
             editor.putString("latitude", String.valueOf(vitrihientai.getLatitude()));
             editor.putString("longtitude", String.valueOf(vitrihientai.getLongitude()));
             editor.commit();
-        }else {
+        } else {
 
         }
         try {

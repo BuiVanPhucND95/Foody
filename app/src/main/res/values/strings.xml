@@ -49,4 +49,15 @@
 
     <string name="dang_mo_cua">Đang mở cửa</string>
     <string name="da_dong_cua">Đã đóng cửa</string>
+
+    <string name="api">AIzaSyCbc8u3Kt1xxkz8f2MuizvRZraEiBg13wc</string>
+    <string name="capnhatwifi">Cập nhật wifi</string>
+    <string name="nhaptenwifi">Tên Wifi</string>
+    <string name="nhapmatkhauwifi">Mật khẩu</string>
+    <string name="dongy">Đồng ý</string>
+
+    <string name="dang">Đăng</string>
+    <string name="viet_binh_luan">Viết bình luận</string>
+    <string name="hint_tieude_bl">Tiêu đề ( không bắt buộc )</string>
+    <string name="hint_noidung_bl">Viết trên 100 từ, đúng chính tả, ngôn từ văn hóa, không spam ... để được điểm thưởng</string>
 </resources>

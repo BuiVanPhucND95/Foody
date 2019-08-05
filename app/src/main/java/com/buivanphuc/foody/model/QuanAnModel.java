@@ -21,7 +21,7 @@ import java.util.List;
 public class QuanAnModel implements Parcelable {
     private boolean giaohang;
     private String giodongcua, giomocua, tenquanan, videogioithieu, maquanan;
-    private long luotthich;
+    private long luotthich,giatoida,giatoithieu;
     private List<String> tienich, hinhanhquanan;
     private List<BinhLuanModel> binhLuanModelList;
     private List<ChiNhanhQuanAnModel> chiNhanhQuanAnModelList;
@@ -33,7 +33,21 @@ public class QuanAnModel implements Parcelable {
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
 
+    public long getGiatoida() {
+        return giatoida;
+    }
 
+    public void setGiatoida(long giatoida) {
+        this.giatoida = giatoida;
+    }
+
+    public long getGiatoithieu() {
+        return giatoithieu;
+    }
+
+    public void setGiatoithieu(long giatoithieu) {
+        this.giatoithieu = giatoithieu;
+    }
 
     public List<ChiNhanhQuanAnModel> getChiNhanhQuanAnModelList() {
         return chiNhanhQuanAnModelList;
@@ -247,6 +261,9 @@ public class QuanAnModel implements Parcelable {
         dest.writeString(videogioithieu);
         dest.writeString(maquanan);
         dest.writeLong(luotthich);
+        dest.writeLong(giatoida);
+        dest.writeLong(giatoithieu);
+
         dest.writeStringList(tienich);
         dest.writeStringList(hinhanhquanan);
         dest.writeTypedList(chiNhanhQuanAnModelList);
@@ -262,6 +279,9 @@ public class QuanAnModel implements Parcelable {
         videogioithieu = in.readString();
         maquanan = in.readString();
         luotthich = in.readLong();
+        giatoida = in.readLong();
+        giatoithieu = in.readLong();
+
         tienich = in.createStringArrayList();
         hinhanhquanan = in.createStringArrayList();
        // bitmapList = in.createTypedArrayList(Bitmap.CREATOR);

@@ -1,6 +1,7 @@
 package com.buivanphuc.foody.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buivanphuc.foody.R;
+import com.buivanphuc.foody.model.BinhLuanModel;
+import com.buivanphuc.foody.view.ChiTietBinhLuanActivity;
+import com.buivanphuc.foody.view.FullScreenHinhAnhBinhLuanActivity;
 
 import java.util.List;
 
@@ -21,11 +25,15 @@ public class HinhAnhBinhLuanAdapter extends RecyclerView.Adapter<HinhAnhBinhLuan
     private Context context;
     private int layout;
     private List<Bitmap> listHinhAnh;
+    private BinhLuanModel binhLuanModel;
+    private boolean isChiTietBinhLuan;
 
-    public HinhAnhBinhLuanAdapter(Context context, int layout, List<Bitmap> listHinhAnh) {
+    public HinhAnhBinhLuanAdapter(Context context, int layout, List<Bitmap> listHinhAnh, BinhLuanModel binhLuanModel, boolean isChiTietBinhLuan) {
         this.context = context;
         this.layout = layout;
         this.listHinhAnh = listHinhAnh;
+        this.binhLuanModel = binhLuanModel;
+        this.isChiTietBinhLuan = isChiTietBinhLuan;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,21 +57,46 @@ public class HinhAnhBinhLuanAdapter extends RecyclerView.Adapter<HinhAnhBinhLuan
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.imgHinhBinhLuan.setImageBitmap(listHinhAnh.get(position));
-        if (position == 3) {
-            holder.khungSoHinhBinhLuan.setVisibility(View.VISIBLE);
-            int soHinhConLai = listHinhAnh.size() - 4;
-            if (soHinhConLai > 0) {
-                holder.txtSoHinhBinhLuan.setText("+" + soHinhConLai + "");
+        if (!isChiTietBinhLuan) {
+            if (position == 3) {
+                holder.khungSoHinhBinhLuan.setVisibility(View.VISIBLE);
+                int soHinhConLai = listHinhAnh.size() - 4;
+                if (soHinhConLai > 0) {
+                    holder.txtSoHinhBinhLuan.setText("+" + soHinhConLai + "");
+                }
+                holder.imgHinhBinhLuan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ChiTietBinhLuanActivity.class);
+                        intent.putExtra("BINHLUANMODEL", binhLuanModel);
+                        context.startActivity(intent);
+                    }
+                });
             }
-
+        } else {
+            holder.imgHinhBinhLuan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, FullScreenHinhAnhBinhLuanActivity.class);
+                    intent.putExtra("BINHLUANMODEL", binhLuanModel);
+                    intent.putExtra("ViTri", position);
+                    context.startActivity(intent);
+                }
+            });
         }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        if (!isChiTietBinhLuan) {
+            return 4;
+        } else {
+            return listHinhAnh.size();
+        }
     }
 
 
