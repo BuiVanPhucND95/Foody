@@ -1,6 +1,8 @@
 package com.buivanphuc.foody.model;
 
-public class ChonHinhBinhLuanModel {
+import java.io.Serializable;
+
+public class ChonHinhBinhLuanModel implements Serializable {
     private String duongDan;
     private boolean isCheck;
 

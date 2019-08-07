@@ -1,6 +1,7 @@
 package com.buivanphuc.foody.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.view.View;
@@ -18,14 +19,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class DangNhapActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView mTxtDangKy,mTxtQuenMK;
+    TextView mTxtDangKy, mTxtQuenMK;
     Button mBtnDangNhap;
     EditText mEdtEmail, mEdtPass;
     String sEmail, sPassWord;
     FirebaseAuth mFirebaseAuth;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
         mBtnDangNhap.setOnClickListener(this);
         mTxtQuenMK.setOnClickListener(this);
 
+        sharedPreferences = getSharedPreferences("LuuDangNhap", MODE_PRIVATE);
 
     }
 
@@ -56,7 +61,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 dangNhap();
                 break;
             case R.id.txtQuenMatKhau:
-                startActivity(new Intent(DangNhapActivity.this,KhoiPhucEmailActivity.class));
+                startActivity(new Intent(DangNhapActivity.this, KhoiPhucEmailActivity.class));
                 break;
         }
     }
@@ -72,7 +77,12 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
             mFirebaseAuth.signInWithEmailAndPassword(sEmail, sPassWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (task.isSuccessful()) {
+                        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("MaUser", user.getUid());
+                        editor.commit();
                         startActivity(new Intent(DangNhapActivity.this, TrangChuActivity.class));
                     } else {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.dang_nhap_that_bai), Toast.LENGTH_LONG).show();
@@ -80,7 +90,6 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 }
             });
         }
-
-
     }
+
 }

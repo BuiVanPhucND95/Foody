@@ -1,20 +1,32 @@
 package com.buivanphuc.foody.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 import java.util.List;
 
 public class BinhLuanModel implements Parcelable {
     private double chamdiem;
     private long luotthich;
-    private String noidung, tieude,mauser;
+    private String noidung, tieude, mauser;
     private ThanhVienModel thanhVienModel;
-    private List<String > hinhanhBinhLuanList;
+    private List<String> hinhanhBinhLuanList;
     private String mabinhluan;
+
     public BinhLuanModel() {
     }
-
 
 
     public String getMabinhluan() {
@@ -96,7 +108,7 @@ public class BinhLuanModel implements Parcelable {
         dest.writeStringList(hinhanhBinhLuanList);
         dest.writeString(mabinhluan);
 
-        dest.writeParcelable(thanhVienModel,flags);
+        dest.writeParcelable(thanhVienModel, flags);
     }
 
     protected BinhLuanModel(Parcel in) {
@@ -122,4 +134,29 @@ public class BinhLuanModel implements Parcelable {
             return new BinhLuanModel[size];
         }
     };
+
+    public void themBinhLuan(String maquanan, BinhLuanModel binhLuanModel, final List<String> listHinhAnh) {
+        DatabaseReference nodeBinhLuan = FirebaseDatabase.getInstance().getReference().child("binhluans");
+        nodeBinhLuan.child(maquanan).push().setValue(binhLuanModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    if (listHinhAnh.size() > 0) {
+                        for (String valueHinh : listHinhAnh) {
+                            Uri uri = Uri.fromFile(new File(valueHinh));
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("hinhanh/" + uri.getLastPathSegment());
+                            storageReference.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
 }

@@ -28,8 +28,8 @@ public class KhoiPhucEmailActivity extends AppCompatActivity implements View.OnC
     FirebaseAuth firebaseAuth;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khoiphuc);
         mEdtEmail = findViewById(R.id.edtEmailKP);
         mBtnSend = findViewById(R.id.btnDangKy);
@@ -38,7 +38,6 @@ public class KhoiPhucEmailActivity extends AppCompatActivity implements View.OnC
 
         mTxtDangKyMoi.setOnClickListener(this);
         mBtnSend.setOnClickListener(this);
-
     }
 
     @Override
