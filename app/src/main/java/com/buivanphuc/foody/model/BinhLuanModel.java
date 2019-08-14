@@ -137,7 +137,8 @@ public class BinhLuanModel implements Parcelable {
 
     public void themBinhLuan(String maquanan, BinhLuanModel binhLuanModel, final List<String> listHinhAnh) {
         DatabaseReference nodeBinhLuan = FirebaseDatabase.getInstance().getReference().child("binhluans");
-        nodeBinhLuan.child(maquanan).push().setValue(binhLuanModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+        String maBinhLuan = nodeBinhLuan.child(maquanan).push().getKey();
+        nodeBinhLuan.child(maquanan).child(maBinhLuan).setValue(binhLuanModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -154,8 +155,20 @@ public class BinhLuanModel implements Parcelable {
                         }
                     }
                 }
+
+
             }
         });
+        if(listHinhAnh.size()>0){
+            for (String valueHinh : listHinhAnh) {
+                Uri uri = Uri.fromFile(new File(valueHinh));
+                FirebaseDatabase.getInstance().getReference().child("hinhanhbinhluans").child(maBinhLuan).push().setValue(uri.getLastPathSegment());
+
+            }
+        }
+
+
+
     }
 
 

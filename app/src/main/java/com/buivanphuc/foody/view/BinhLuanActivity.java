@@ -3,6 +3,7 @@ package com.buivanphuc.foody.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -52,6 +53,8 @@ public class BinhLuanActivity extends AppCompatActivity implements View.OnClickL
         sTenQuanAn = getIntent().getStringExtra("TenQuanAn");
         sDiaChi = getIntent().getStringExtra("DiaChi");
         maQuanAn = getIntent().getStringExtra("MaQuanAn");
+
+        Log.d("KiemTra",maQuanAn);
 
         mTxtDiaChi = findViewById(R.id.txtDiaChiQuanAn);
         mTxtTenQuanAn = findViewById(R.id.txtTenQuanAn);

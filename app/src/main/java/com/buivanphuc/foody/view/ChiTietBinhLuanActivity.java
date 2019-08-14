@@ -3,6 +3,7 @@ package com.buivanphuc.foody.view;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class ChiTietBinhLuanActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     bitmapList.add(bitmap);
                     if(bitmapList.size() == binhLuanModel.getHinhanhBinhLuanList().size()){
+                        Log.d("KiemTra","haha");
                         HinhAnhBinhLuanAdapter hinhAnhBinhLuanAdapter = new HinhAnhBinhLuanAdapter(ChiTietBinhLuanActivity.this,R.layout.custom_layout_hinhbinhluan,bitmapList,binhLuanModel,true);
                         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
 

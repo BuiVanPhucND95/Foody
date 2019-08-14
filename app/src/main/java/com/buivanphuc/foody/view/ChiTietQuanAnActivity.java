@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.buivanphuc.foody.R;
 import com.buivanphuc.foody.adapter.BinhLuanAdapter;
+import com.buivanphuc.foody.controller.ThucDonController;
 import com.buivanphuc.foody.controller.WifiQuanAnController;
 import com.buivanphuc.foody.model.BinhLuanModel;
 import com.buivanphuc.foody.model.QuanAnModel;
@@ -55,20 +59,21 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
     TextView mTxtTongSoHinhAnh, mTxtTongSoCheckIn, mTxtTongSoLuuLai, mTxtTongSoBinhLuan, mTxtGioiHanGia;
     TextView mTxtTenWifi, mTxtMatKhauWifi, mTxtNgayDangWifi;
     ImageView mImageHinhQuanAn, mImageBack;
-    RecyclerView recyclerBinhLuan;
+    RecyclerView recyclerBinhLuan, recyclerThucDon;
     Button mBtnBinhLuan;
     ProgressBar progressBarChiTiet;
     NestedScrollView nestedScrollViewChiTiet;
     LinearLayout khungTienTich, khungWifi;
     View khungTinhNang;
+    VideoView videoView;
 
     QuanAnModel quanAnModel;
     BinhLuanAdapter binhLuanAdapter;
     List<BinhLuanModel> binhLuanModelList;
     GoogleMap googleMap;
     MapFragment mapFragment;
-
     WifiQuanAnController wifiQuanAnController;
+    ThucDonController thucDonController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +84,7 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
         quanAnModel = getIntent().getParcelableExtra("quanan");
         binhLuanModelList = new ArrayList<>();
         wifiQuanAnController = new WifiQuanAnController();
+        thucDonController = new ThucDonController();
         hienThiChiTietQuanAn();
     }
 
@@ -105,6 +111,7 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
         mImageBack = findViewById(R.id.imgBack);
         mTxtGioiHanGia = findViewById(R.id.txtGioiHanGia);
         recyclerBinhLuan = findViewById(R.id.recyclerBinhLuanChiTietQuanAn);
+        recyclerThucDon = findViewById(R.id.recyclerThucDon);
         khungTienTich = findViewById(R.id.khungTienTich);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mTxtTenWifi = findViewById(R.id.txtTenWifi);
@@ -113,6 +120,11 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
         khungWifi = findViewById(R.id.khungWifi);
         khungTinhNang = findViewById(R.id.khungTinhNang);
         mBtnBinhLuan = findViewById(R.id.btnBinhLuan);
+        videoView = findViewById(R.id.videoView);
+
+        MediaController mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+
 
         nestedScrollViewChiTiet = findViewById(R.id.nestedScrollViewChiTiet);
         nestedScrollViewChiTiet.smoothScrollTo(0, 0);
@@ -187,12 +199,31 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
         } else {
             mTxtGioiHanGia.setVisibility(View.INVISIBLE);
         }
+        // Kiểm tra có video giới thiệu hay không
+
+        if (quanAnModel.getVideogioithieu() != null) {
+            videoView.setVisibility(View.VISIBLE);
+            mImageHinhQuanAn.setVisibility(View.GONE);
+            StorageReference storageVideo = FirebaseStorage.getInstance().getReference().child("videos").child(quanAnModel.getVideogioithieu());
+            storageVideo.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    videoView.setVideoURI(uri);
+                    videoView.start();
+                }
+            });
+        } else {
+            videoView.setVisibility(View.GONE);
+            mImageHinhQuanAn.setVisibility(View.VISIBLE);
+        }
         // dowload Hình Tiện ích
         dowloadHinhTienIch();
 
         // xử lý wifi
         wifiQuanAnController.hienThiDanhSachWifiQuanAn(quanAnModel.getMaquanan(), mTxtTenWifi, mTxtMatKhauWifi, mTxtNgayDangWifi);
 
+        // Hiển thị danh sách thực đơn quán ăn
+        thucDonController.getDanhSachThucDonQuanAn(quanAnModel.getMaquanan(),recyclerThucDon,this);
     }
 
     @Override
@@ -214,10 +245,10 @@ public class ChiTietQuanAnActivity extends AppCompatActivity implements View.OnC
                 startActivity(iGoogleMap);
                 break;
             case R.id.btnBinhLuan:
-                Intent iBinhLuan = new Intent(this,BinhLuanActivity.class);
-                iBinhLuan.putExtra("MaQuanAn",quanAnModel.getMaquanan());
-                iBinhLuan.putExtra("TenQuanAn",quanAnModel.getTenquanan());
-                iBinhLuan.putExtra("DiaChi",quanAnModel.getChiNhanhQuanAnModelList().get(0).getDiachi());
+                Intent iBinhLuan = new Intent(this, BinhLuanActivity.class);
+                iBinhLuan.putExtra("MaQuanAn", quanAnModel.getMaquanan());
+                iBinhLuan.putExtra("TenQuanAn", quanAnModel.getTenquanan());
+                iBinhLuan.putExtra("DiaChi", quanAnModel.getChiNhanhQuanAnModelList().get(0).getDiachi());
                 startActivity(iBinhLuan);
                 break;
         }

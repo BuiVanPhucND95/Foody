@@ -59,6 +59,7 @@ public class HinhAnhBinhLuanAdapter extends RecyclerView.Adapter<HinhAnhBinhLuan
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.imgHinhBinhLuan.setImageBitmap(listHinhAnh.get(position));
+
         if (!isChiTietBinhLuan) {
             if (position == 3) {
                 holder.khungSoHinhBinhLuan.setVisibility(View.VISIBLE);
@@ -93,7 +94,12 @@ public class HinhAnhBinhLuanAdapter extends RecyclerView.Adapter<HinhAnhBinhLuan
     @Override
     public int getItemCount() {
         if (!isChiTietBinhLuan) {
-            return 4;
+            if(listHinhAnh.size()<4){
+                return listHinhAnh.size();
+            }else {
+                return 4;
+            }
+
         } else {
             return listHinhAnh.size();
         }

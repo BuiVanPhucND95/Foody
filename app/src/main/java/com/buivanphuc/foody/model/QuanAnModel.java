@@ -26,11 +26,20 @@ public class QuanAnModel implements Parcelable {
     private List<BinhLuanModel> binhLuanModelList;
     private List<ChiNhanhQuanAnModel> chiNhanhQuanAnModelList;
     private List<Bitmap> bitmapList;
+    private List<ThucDonModel> thucDonModelList;
 
     private DatabaseReference nodeRoot;
 
     public QuanAnModel() {
         nodeRoot = FirebaseDatabase.getInstance().getReference();
+    }
+
+    public List<ThucDonModel> getThucDonModelList() {
+        return thucDonModelList;
+    }
+
+    public void setThucDonModelList(List<ThucDonModel> thucDonModelList) {
+        this.thucDonModelList = thucDonModelList;
     }
 
     public long getGiatoida() {
@@ -166,19 +175,14 @@ public class QuanAnModel implements Parcelable {
         } else {
             nodeRoot.addListenerForSingleValueEvent(valueEventListener);
         }
-
-
     }
 
     private void LayDanhSachQuanAn(DataSnapshot dataSnapshot, IODauInterface ioDauInterface, Location viTriHienTai, int itemTiepTheo, int itemDaCo) {
         DataSnapshot dataSnapshotQuanAn = dataSnapshot.child("quanans");
-
         int i = 0;
 
         // Lấy danh sách quán ăn
         for (DataSnapshot valueQuanAn : dataSnapshotQuanAn.getChildren()) {
-
-
             if (i == itemTiepTheo) {
                 break;
             }

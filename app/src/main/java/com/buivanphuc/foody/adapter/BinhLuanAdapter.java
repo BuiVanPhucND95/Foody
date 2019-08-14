@@ -3,6 +3,7 @@ package com.buivanphuc.foody.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +27,14 @@ public class BinhLuanAdapter extends RecyclerView.Adapter<BinhLuanAdapter.ViewHo
     private Context context;
     private List<BinhLuanModel> binhLuanModelList;
     private int layout;
-    private List<Bitmap> bitmapList;
+    // private List<Bitmap> bitmapList;
 
     public BinhLuanAdapter(Context context, List<BinhLuanModel> binhLuanModelList, int layout) {
         this.context = context;
         this.binhLuanModelList = binhLuanModelList;
         this.layout = layout;
 
-        bitmapList = new ArrayList<>();
+
     }
 
     class ViewHolderBinhLuan extends RecyclerView.ViewHolder {
@@ -62,14 +63,15 @@ public class BinhLuanAdapter extends RecyclerView.Adapter<BinhLuanAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderBinhLuan holder, int position) {
         final BinhLuanModel binhLuanModel = binhLuanModelList.get(position);
-
+        final List<Bitmap> bitmapList = new ArrayList<>();
         holder.txtTieuDe.setText(binhLuanModel.getTieude());
         holder.txtNoiDung.setText(binhLuanModel.getNoidung());
         holder.txtChamDiemBinhLuan.setText(binhLuanModel.getChamdiem() + "");
         setHinhAnhBinhLuan(holder.cicleImageUser, binhLuanModel.getThanhVienModel().getHinhanh());
 
         // set hình ảnh bình luận
-        for (String linkHinh : binhLuanModel.getHinhanhBinhLuanList()){
+        for (final String linkHinh : binhLuanModel.getHinhanhBinhLuanList()) {
+
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("hinhanh").child(linkHinh);
             long ONE_MEGABYTE = 1024 * 1024;
 
@@ -77,18 +79,20 @@ public class BinhLuanAdapter extends RecyclerView.Adapter<BinhLuanAdapter.ViewHo
                 @Override
                 public void onSuccess(byte[] bytes) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                   bitmapList.add(bitmap);
-                   if(bitmapList.size() == binhLuanModel.getHinhanhBinhLuanList().size()){
-                       HinhAnhBinhLuanAdapter hinhAnhBinhLuanAdapter = new HinhAnhBinhLuanAdapter(context,R.layout.custom_layout_hinhbinhluan,bitmapList,binhLuanModel,false);
-                       RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context,2);
+                    Log.d("linkHinh", linkHinh);
+                    bitmapList.add(bitmap);
+                    if (bitmapList.size() == binhLuanModel.getHinhanhBinhLuanList().size()) {
 
-                       holder.recyclerHinhBinhLuan.setLayoutManager(layoutManager);
-                       holder.recyclerHinhBinhLuan.setAdapter(hinhAnhBinhLuanAdapter);
-                   }
+                        HinhAnhBinhLuanAdapter hinhAnhBinhLuanAdapter = new HinhAnhBinhLuanAdapter(context, R.layout.custom_layout_hinhbinhluan, bitmapList, binhLuanModel, false);
+                        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 2);
+
+                        holder.recyclerHinhBinhLuan.setLayoutManager(layoutManager);
+                        holder.recyclerHinhBinhLuan.setAdapter(hinhAnhBinhLuanAdapter);
+                        hinhAnhBinhLuanAdapter.notifyDataSetChanged();
+                    }
                 }
             });
         }
-
 
 
     }
