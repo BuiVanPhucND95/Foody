@@ -5,9 +5,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -18,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.buivanphuc.foody.R;
 import com.buivanphuc.foody.model.ThucDonModel;
+import com.buivanphuc.foody.model.TienIchModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,8 +37,10 @@ public class ThemQuanAnActivity extends AppCompatActivity implements View.OnClic
     TextView txtGioMoCua, txtGioDongCua;
     Spinner spinnerKhuVuc, spinnerThucDon;
     List<ThucDonModel> thucDonModelList;
+    List<String > tienIchList;
     List<String> khuVucList, thucDonList;
     ArrayAdapter<String> adapterKhuVuc, adapterThucDon;
+    LinearLayout khungTienTich;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class ThemQuanAnActivity extends AppCompatActivity implements View.OnClic
         txtGioMoCua = findViewById(R.id.txtGioMoCua);
         spinnerKhuVuc = findViewById(R.id.spinnerKhuVuc);
         spinnerThucDon = findViewById(R.id.spinnerThucDon);
+        khungTienTich = findViewById(R.id.khungTienTich);
 
         btnGioMoCua.setOnClickListener(this);
         btnGioDongCua.setOnClickListener(this);
@@ -54,9 +62,10 @@ public class ThemQuanAnActivity extends AppCompatActivity implements View.OnClic
         thucDonModelList = new ArrayList<>();
         khuVucList = new ArrayList<>();
         thucDonList = new ArrayList<>();
+        tienIchList = new ArrayList<>();
         layDanhSachKhuVuc();
         layDanhSachThucDon();
-
+        layDanhSachTienIch();
 
         adapterKhuVuc = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, khuVucList);
         spinnerKhuVuc.setAdapter(adapterKhuVuc);
@@ -142,6 +151,45 @@ public class ThemQuanAnActivity extends AppCompatActivity implements View.OnClic
                     String tenKhuVuc = snapshot.getKey();
                     khuVucList.add(tenKhuVuc);
                     adapterKhuVuc.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void layDanhSachTienIch() {
+        FirebaseDatabase.getInstance().getReference().child("quanlytienichs").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String maTienIch = snapshot.getKey();
+                    TienIchModel tienIchModel = snapshot.getValue(TienIchModel.class);
+                    tienIchModel.setMatienich(maTienIch);
+
+                    final CheckBox checkBox = new CheckBox(getApplicationContext());
+                    checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    checkBox.setText(tienIchModel.getTentienich());
+                    checkBox.setTag(maTienIch);
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            String maTienIch = checkBox.getTag().toString();
+                            if(isChecked){
+                                tienIchList.add(maTienIch);
+                            }else {
+                                tienIchList.remove(maTienIch);
+                            }
+                        }
+                    });
+
+                    khungTienTich.addView(checkBox);
+
+
+
                 }
             }
 
